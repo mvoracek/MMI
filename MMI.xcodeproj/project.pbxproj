@@ -14,13 +14,15 @@
 		C945D13F18A0453700307752 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C945D13E18A0453700307752 /* main.m */; };
 		C945D14318A0453700307752 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C945D14218A0453700307752 /* AppDelegate.m */; };
 		C945D14618A0453700307752 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C945D14418A0453700307752 /* Main.storyboard */; };
-		C945D14918A0453700307752 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C945D14818A0453700307752 /* ViewController.m */; };
+		C945D14918A0453700307752 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C945D14818A0453700307752 /* HomeViewController.m */; };
 		C945D14B18A0453700307752 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C945D14A18A0453700307752 /* Images.xcassets */; };
 		C945D15218A0453700307752 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C945D15118A0453700307752 /* XCTest.framework */; };
 		C945D15318A0453700307752 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C945D13218A0453700307752 /* Foundation.framework */; };
 		C945D15418A0453700307752 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C945D13618A0453700307752 /* UIKit.framework */; };
 		C945D15C18A0453700307752 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C945D15A18A0453700307752 /* InfoPlist.strings */; };
 		C945D15E18A0453700307752 /* MMITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C945D15D18A0453700307752 /* MMITests.m */; };
+		C945D16918A05F9A00307752 /* FeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C945D16818A05F9A00307752 /* FeedTableViewCell.m */; };
+		C945D16B18A09B4200307752 /* nicolascage320.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C945D16A18A09B4200307752 /* nicolascage320.jpeg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,14 +47,17 @@
 		C945D14118A0453700307752 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C945D14218A0453700307752 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		C945D14518A0453700307752 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		C945D14718A0453700307752 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		C945D14818A0453700307752 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		C945D14718A0453700307752 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		C945D14818A0453700307752 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		C945D14A18A0453700307752 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C945D15018A0453700307752 /* MMITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MMITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C945D15118A0453700307752 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		C945D15918A0453700307752 /* MMITests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MMITests-Info.plist"; sourceTree = "<group>"; };
 		C945D15B18A0453700307752 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C945D15D18A0453700307752 /* MMITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMITests.m; sourceTree = "<group>"; };
+		C945D16718A05F9A00307752 /* FeedTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedTableViewCell.h; sourceTree = "<group>"; };
+		C945D16818A05F9A00307752 /* FeedTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedTableViewCell.m; sourceTree = "<group>"; };
+		C945D16A18A09B4200307752 /* nicolascage320.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nicolascage320.jpeg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,8 +120,10 @@
 				C945D14118A0453700307752 /* AppDelegate.h */,
 				C945D14218A0453700307752 /* AppDelegate.m */,
 				C945D14418A0453700307752 /* Main.storyboard */,
-				C945D14718A0453700307752 /* ViewController.h */,
-				C945D14818A0453700307752 /* ViewController.m */,
+				C945D14718A0453700307752 /* HomeViewController.h */,
+				C945D14818A0453700307752 /* HomeViewController.m */,
+				C945D16718A05F9A00307752 /* FeedTableViewCell.h */,
+				C945D16818A05F9A00307752 /* FeedTableViewCell.m */,
 				C945D14A18A0453700307752 /* Images.xcassets */,
 				C945D13918A0453700307752 /* Supporting Files */,
 			);
@@ -126,6 +133,7 @@
 		C945D13918A0453700307752 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C945D16A18A09B4200307752 /* nicolascage320.jpeg */,
 				C945D13A18A0453700307752 /* MMI-Info.plist */,
 				C945D13B18A0453700307752 /* InfoPlist.strings */,
 				C945D13E18A0453700307752 /* main.m */,
@@ -229,6 +237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C945D14B18A0453700307752 /* Images.xcassets in Resources */,
+				C945D16B18A09B4200307752 /* nicolascage320.jpeg in Resources */,
 				C945D13D18A0453700307752 /* InfoPlist.strings in Resources */,
 				C945D14618A0453700307752 /* Main.storyboard in Resources */,
 			);
@@ -249,7 +258,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C945D14918A0453700307752 /* ViewController.m in Sources */,
+				C945D14918A0453700307752 /* HomeViewController.m in Sources */,
+				C945D16918A05F9A00307752 /* FeedTableViewCell.m in Sources */,
 				C945D14318A0453700307752 /* AppDelegate.m in Sources */,
 				C945D13F18A0453700307752 /* main.m in Sources */,
 			);
