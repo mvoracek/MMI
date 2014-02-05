@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[HomeTableViewController tableView:cellForRowAtIndexPath:object:]:HomeTableViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "owner">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SearchTableViewController filterResults:]:SearchTableViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[SearchTableViewController tableView:cellForRowAtIndexPath:object:]:SearchTableViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "indexPath">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SearchTableViewController tableView:numberOfRowsInSection:]:SearchTableViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.searchResults.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

@@ -7,10 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Parse/Parse.h"
 
-@interface FeedTableViewCell : UITableViewCell
+@interface FeedTableViewCell : PFTableViewCell
 
-@property UIImageView *photoImageView;
+@property UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet PFImageView *userPhoto;
+@property (weak, nonatomic) IBOutlet UILabel *userLabel;
+
+@property (weak, nonatomic) IBOutlet PFImageView *photoImageView;
+//@property PFImageView *photoImageView;
 @property UIButton *likeButton;
 @property UIButton *commentsButton;
 @property UILabel *likesLabel;
