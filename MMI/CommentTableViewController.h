@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "Parse/Parse.h"
 
-@interface CommentTableViewController : UITableViewController
-
+@interface CommentTableViewController : PFQueryTableViewController
+@property PFObject *photo;
 @end

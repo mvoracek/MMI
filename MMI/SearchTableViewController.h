@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Parse/Parse.h"
 
-@interface SearchTableViewController : PFQueryTableViewController
+@interface SearchTableViewController : PFQueryTableViewController <UISearchBarDelegate, UISearchDisplayDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) IBOutlet UISearchDisplayController *searchController;

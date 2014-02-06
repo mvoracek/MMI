@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[ProfileTableViewController viewDidLoad]:ProfileTableViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.user">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SearchTableViewController queryForTable]:SearchTableViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.searchBar.text">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ProfileTableViewController onFollowPressed:]:ProfileTableViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "currentUser.username">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CommentTableViewController onAddCommentPressed:]:CommentTableViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "commentTextField.text">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

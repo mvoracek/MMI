@@ -10,7 +10,7 @@
 #import "Parse/Parse.h"
 #import "ProfileTableViewController.h"
 
-@interface SearchTableViewController () <UISearchBarDelegate,UISearchDisplayDelegate>
+@interface SearchTableViewController ()
 {
     IBOutlet UITableView *searchTableView;
     NSString *selectedUserName;
@@ -25,9 +25,13 @@
     self.parseClassName = @"_User";
     [super viewDidLoad];
     
-  //  self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    [self.searchBar setShowsScopeBar:NO];
+    [self.searchBar sizeToFit];
     
- //   self.tableView.tableHeaderView = self.searchBar;
+    // Hide the search bar until user scrolls up
+    CGRect newBounds = [[self tableView] bounds];
+    newBounds.origin.y = newBounds.origin.y + self.searchBar.bounds.size.height;
+    [[self tableView] setBounds:newBounds];
     
  //   self.searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
 
@@ -48,57 +52,33 @@
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
-- (void)filterResults:(NSString *)searchTerm
+-(PFQuery *)queryForTable
 {
-    [self.searchResults removeAllObjects];
-    
-    PFQuery *query = [PFQuery queryWithClassName: @"_User"];
-    [query whereKey:@"username" containsString:searchTerm];
-    
-    NSArray *results  = [query findObjects];
-    
-    NSLog(@"%@", results);
-    NSLog(@"%u", results.count);
-    
-    [self.searchResults addObjectsFromArray:results];
+    PFQuery *query = [PFQuery queryWithClassName:@"_User"];
+    [query whereKey:@"username" hasPrefix:self.searchBar.text];
+    return query;
 }
 
-
--(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    [self filterResults:searchString];
-    return YES;
+    [self loadObjects];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"DisplayUser"])
     {
-        NSIndexPath *indexPath = [searchTableView indexPathForSelectedRow];
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        PFUser *user = [self.objects objectAtIndex:indexPath.row];
         
         ProfileTableViewController *vc = segue.destinationViewController;
- 
-        if (searchTableView != self.searchDisplayController.searchResultsTableView)
-        {
-            PFQuery *query = [PFQuery queryWithClassName:@"_User"];
-            [query whereKey:@"username" equalTo:selectedUserName];
-            vc.user = [query findObjects][0];
-        }
         
-        if ([searchTableView isEqual:self.searchDisplayController.searchResultsTableView])
-        {
-            PFUser *obj2 = [self.searchResults objectAtIndex:indexPath.row];
-            PFQuery *query = [PFQuery queryWithClassName:@"_User"];
-            PFObject *searchedUser = [query getObjectWithId:obj2.objectId];
-            vc.user = [searchedUser objectForKey:@"username"];
-        }
+        vc.user = user;
     }
 }
 
 
 #pragma mark - Table view data source
-
-
 
 -(PFTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
 {
@@ -109,43 +89,20 @@
         cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
     }
     
-    
-    if (tableView != self.searchDisplayController.searchResultsTableView)
-    {
-        cell.textLabel.text = [object objectForKey:@"username"];
-    }
-    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView])
-    {
-        PFUser *obj2 = [self.searchResults objectAtIndex:indexPath.row];
-        PFQuery *query = [PFQuery queryWithClassName:@"_User"];
-        PFObject *searchedUser = [query getObjectWithId:obj2.objectId];
-        cell.textLabel.text = [searchedUser objectForKey:@"username"];
-        
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
-    
+    cell.textLabel.text = [object objectForKey:@"username"];
+
     return cell;
 }
-
-- (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PFTableViewCell *cell = [tv cellForRowAtIndexPath:indexPath];
+    UITableViewCell *cell = [tv cellForRowAtIndexPath:indexPath];
     selectedUserName = cell.textLabel.text;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
-    if (tableView == self.tableView)
-    {
 
-        return self.objects.count;
-    }
-    else
-    {
-        return self.searchResults.count;
-    }
-    
+    return self.objects.count;
 }
 
 

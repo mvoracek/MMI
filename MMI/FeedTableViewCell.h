@@ -17,9 +17,10 @@
 
 @property (weak, nonatomic) IBOutlet PFImageView *photoImageView;
 //@property PFImageView *photoImageView;
-@property UIButton *likeButton;
+@property (weak, nonatomic) IBOutlet UIButton *likeButton;
 @property UIButton *commentsButton;
 @property UILabel *likesLabel;
 @property UILabel *commentsLabel;
 
+@property PFObject *photo;
 @end
