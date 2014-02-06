@@ -7,18 +7,23 @@
 //
 
 #import "ProfileTableViewController.h"
+#import <MobileCoreServices/UTCoreTypes.h>
 
-@interface ProfileTableViewController ()
+
+@interface ProfileTableViewController () <UIImagePickerControllerDelegate>
 {
+    UIImagePickerController *imagePicker;
+    UIImage *image;
+
     PFUser *currentUser;
     PFRelation *currentUserFollowingRelation;
     BOOL userIsAlreadyBeingFollowed;
 }
 
-//@property UILabel *profileUserLabel;
-//@property UIButton *followButton;
+
 @property (weak, nonatomic) IBOutlet UILabel *profileUserLabel;
 @property (weak, nonatomic) IBOutlet UIButton *profileButton;
+@property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
 
 
 @end
@@ -34,8 +39,6 @@
     currentUser = [PFUser currentUser];
     currentUserFollowingRelation = [currentUser relationforKey:@"following"];
     
-    
-  
     if (!self.user)
     {
         self.user = currentUser;
@@ -46,7 +49,6 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
     //_profileUserLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 5, 120, 30)];
@@ -64,7 +66,11 @@
     {
         userIsAlreadyBeingFollowed = NO;
     }
-    
+    PFFile *profileImage = self.user[@"profilePic"];
+
+    _profileImageView.file = profileImage;
+    _profileImageView.contentMode = UIViewContentModeScaleAspectFit;
+    [_profileImageView loadInBackground];
     _profileUserLabel.text = self.user[@"username"];
     [self setupActions];
     
@@ -72,32 +78,105 @@
 
 -(void)setupActions
 {
-    if (userIsAlreadyBeingFollowed)
+    if (self.user != currentUser)
     {
-        [_profileButton setTitle:@"UnFollow" forState:UIControlStateNormal];
+        if (userIsAlreadyBeingFollowed)
+        {
+            [_profileButton setTitle:@"UnFollow" forState:UIControlStateNormal];
+        }
+        else
+        {
+            [_profileButton setTitle:@"Follow" forState:UIControlStateNormal];
+        }
     }
     else
     {
-        [_profileButton setTitle:@"Follow" forState:UIControlStateNormal];
+        [_profileButton setTitle:@"Edit Profile Picture" forState:UIControlStateNormal];
     }
+    
+    
 }
 
 - (IBAction)onFollowPressed:(id)sender
 {
-
-    if (userIsAlreadyBeingFollowed)
+    if (self.user != currentUser)
     {
-        [currentUserFollowingRelation removeObject:self.user];
-        userIsAlreadyBeingFollowed = NO;
+        if (userIsAlreadyBeingFollowed)
+        {
+            [currentUserFollowingRelation removeObject:self.user];
+            userIsAlreadyBeingFollowed = NO;
+        }
+        else
+        {
+            [currentUserFollowingRelation addObject:self.user];
+            userIsAlreadyBeingFollowed = YES;
+        }
+        
+        [currentUser saveInBackground];
+        [self setupActions];
     }
     else
     {
-        [currentUserFollowingRelation addObject:self.user];
-        userIsAlreadyBeingFollowed = YES;
+        imagePicker = [[UIImagePickerController alloc]init];
+        imagePicker.delegate = self;
+        imagePicker.allowsEditing = NO;
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
+            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        } else  {
+            imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        }
+        imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:imagePicker.sourceType];
+        [self presentViewController :imagePicker animated:NO completion:nil];
     }
-  
-    [currentUser saveInBackground];
-    [self setupActions];
+    
+
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    NSString *mediaType = [ info objectForKey:UIImagePickerControllerMediaType];
+    
+    if ([mediaType isEqualToString:(NSString *)kUTTypeImage])
+    {
+        image = info[UIImagePickerControllerOriginalImage];
+        _profileImageView.image = image;
+        
+        NSData *imageData = UIImageJPEGRepresentation(image, 1.0f);
+        
+        PFFile *imageFile = [PFFile fileWithName:@"Image.jpg" data:imageData];
+        [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (!error) {
+                
+                //PFObject *userPhoto = [PFObject objectWithClassName:@"_User"];
+                //[userPhoto setObject:imageFile forKey:@"userPhoto"];
+                
+                [currentUser setObject:imageFile forKey:@"profilePic"];
+                
+                //PFACL *ACL = [PFACL ACLWithUser:[PFUser currentUser]];
+                //[ACL setPublicReadAccess:YES];
+                //[ACL setWriteAccess:YES forUser:[PFUser currentUser]];
+    
+                //PFUser *user = [PFUser currentUser];
+                //[userPhoto setObject:user forKey:@"user"];
+                
+                
+                
+                [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (!error) {
+                        // [self refresh:nil];
+                        
+                    }
+                    else{
+                        // Log details of the failure
+                        NSLog(@"Error: %@ %@", error, [error userInfo]);
+                    }
+                }];
+            }
+        }];
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
+        
+    }
 }
 
 @end

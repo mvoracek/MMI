@@ -32,18 +32,6 @@
     CGRect newBounds = [[self tableView] bounds];
     newBounds.origin.y = newBounds.origin.y + self.searchBar.bounds.size.height;
     [[self tableView] setBounds:newBounds];
-    
- //   self.searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
-
-    self.searchController.searchResultsDataSource = self;
-    self.searchController.searchResultsDelegate = self;
-    self.searchController.delegate = self;
-    
-    
-    CGPoint offset = CGPointMake(0, self.searchBar.frame.size.height);
-    self.tableView.contentOffset = offset;
-    
-    self.searchResults = [NSMutableArray array];
 
 }
 

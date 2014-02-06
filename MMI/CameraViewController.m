@@ -59,7 +59,8 @@
 }
 
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
     NSString *mediaType = [ info objectForKey:UIImagePickerControllerMediaType];
     
     if ([mediaType isEqualToString:(NSString *)kUTTypeImage]){
