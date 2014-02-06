@@ -69,8 +69,10 @@
     PFObject *comment = [PFObject objectWithClassName:@"Comment"];
     [comment setValue:commentTextField.text forKey:@"text"];
     [comment setObject:currentUser forKey:@"createdByUser"];
+    [comment setObject:currentUser.username forKey:@"createdByUserName"];
     [comment setObject:self.photo forKey:@"attachedToPhoto"];
     [comment saveInBackground];
+    [self loadObjects];
 }
 
 #pragma mark - Table view data source
@@ -80,9 +82,9 @@
     PFQuery *queryComments = [PFQuery queryWithClassName:@"Comment"];
  //   [queryComments includeKey:@"createdByUser"];
  //   [queryComments includeKey:@"attachedToPhoto"];
-    [queryComments orderByDescending:@"createdAt"];
-    [queryComments whereKey:@"createdByUser" equalTo:currentUser.objectId];
-    [queryComments whereKey:@"attachedToPhoto" equalTo:self.photo.objectId];
+      [queryComments orderByDescending:@"createdAt"];
+ //   [queryComments whereKey:@"createdByUser" equalTo:currentUser];
+    [queryComments whereKey:@"attachedToPhoto" equalTo:self.photo];
     
     return queryComments;
 }
@@ -98,7 +100,8 @@
         cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
     }
     
-    cell.textLabel.text = [object objectForKey:@"text"];
+    cell.detailTextLabel.text = [object objectForKey:@"text"];
+    cell.textLabel.text = [object objectForKey:@"createdByUserName"];
     
     return cell;
 }

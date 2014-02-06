@@ -19,6 +19,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[HomeTableViewController tableView:cellForRowAtIndexPath:object:]:HomeTableViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[queryComments findObjects]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[ProfileTableViewController onFollowPressed:]:ProfileTableViewController.m">
          <PersistentStrings>
             <PersistentString

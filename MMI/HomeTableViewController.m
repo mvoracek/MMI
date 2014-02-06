@@ -25,9 +25,10 @@
 - (void)viewDidLoad
 {
     self.parseClassName = @"Photo";
-    
     currentUser = [PFUser currentUser];
     currentUserFollowingRelation = [currentUser relationforKey:@"following"];
+ 
+    self.view.backgroundColor = [UIColor orangeColor];
     [super viewDidLoad];
     
 }
@@ -50,7 +51,7 @@
 -(PFTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
 {
     FeedTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"a"];
-    
+    NSLog(@"cell for row");
     if (!cell)
     {
         cell = [[FeedTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"a"];
@@ -76,7 +77,7 @@
     PFUser *owner = object[@"user"];
     cell.userLabel.text = owner.username;
     
-    currentPhotoLikedByRelation = [object relationforKey:@"following"];
+    currentPhotoLikedByRelation = [object relationforKey:@"likedBy"];
     PFQuery *query = [currentPhotoLikedByRelation query];
     [query whereKey:@"username" equalTo:currentUser.username];
     
@@ -89,13 +90,54 @@
         [cell.likeButton setTitle:@"Do I Like this?" forState:UIControlStateNormal];
     }
     
+    PFQuery *queryComments = [PFQuery queryWithClassName:@"Comment"];
+    [queryComments orderByDescending:@"createdAt"];
+    [queryComments whereKey:@"attachedToPhoto" equalTo:cell.photo];
+  
+    cell.commentsLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    cell.commentsLabel.numberOfLines = 0;
+    
+    NSArray *comments = queryComments.findObjects;
+    
+    cell.commentsLabel.text = @"";
+    
+    int commentsToShow = 0;
+    for (PFObject *comment in comments)
+    {
+        if (commentsToShow < 5)
+        {
+            if (commentsToShow == 0)
+            {
+                cell.commentsLabel.text = [NSString stringWithFormat:@"%@: %@", [comment objectForKey:@"createdByUserName"], [comment objectForKey:@"text"]];
+            }
+            else
+            {
+                cell.commentsLabel.text = [NSString stringWithFormat:@"%@\n%@: %@", cell.commentsLabel.text, [comment objectForKey:@"createdByUserName"], [comment objectForKey:@"text"]];
+            }
+            commentsToShow++;
+        }
+        else
+        {
+            cell.commentsLabel.text = [NSString stringWithFormat:@"%@ ... (more)", cell.commentsLabel.text];
+        }
+    }
+    
+    NSLog(@"%@", cell.commentsLabel.text);
+
+    cell.commentsLabel.backgroundColor = [UIColor yellowColor];
+    CGRect frame = cell.commentsLabel.frame;
+
+    
+    frame.size.height = 15 * (commentsToShow);
+    cell.commentsLabel.frame = frame;
+    
     return cell;
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-    [self loadObjects];
+
     
     if (![PFUser currentUser])
     {
@@ -107,6 +149,8 @@
         login.logInView.logo = label;
         [self presentViewController:login animated:YES completion:nil];
     }
+
+    [self loadObjects];
 }
 - (IBAction)onLikeButtonPressed:(UIButton*)button
 {
@@ -116,7 +160,7 @@
     {
         FeedTableViewCell *cell = (FeedTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
         PFObject *photo = cell.photo;
-        currentPhotoLikedByRelation = [photo relationforKey:@"following"];
+        currentPhotoLikedByRelation = [photo relationforKey:@"likedBy"];
         if ([button.titleLabel.text isEqualToString:@"I Like this!"])
         {
             [currentPhotoLikedByRelation removeObject:currentUser];
@@ -137,8 +181,8 @@
     {
         selectedIP = indexPath;
         
-//        FeedTableViewCell *cell = (FeedTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
-//        PFObject *photo = cell.photo;
+        //        FeedTableViewCell *cell = (FeedTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+        //        PFObject *photo = cell.photo;
     }
 }
 
@@ -146,10 +190,10 @@
 {
     if ([segue.identifier isEqualToString:@"Comments"])
     {
-
+        
         FeedTableViewCell *cell = (FeedTableViewCell*)[self.tableView cellForRowAtIndexPath:selectedIP];
         PFObject *photo = cell.photo;
-       
+        
         CommentTableViewController *vc = segue.destinationViewController;
         
         vc.photo = photo;
@@ -175,7 +219,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 440.0;
+    return 500.0;
 }
 
 @end

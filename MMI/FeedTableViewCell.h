@@ -20,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
 @property UIButton *commentsButton;
 @property UILabel *likesLabel;
-@property UILabel *commentsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *commentsLabel;
 
 @property PFObject *photo;
 @end
