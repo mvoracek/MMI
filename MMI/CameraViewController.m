@@ -94,7 +94,7 @@
             [userPhoto setObject:imageFile forKey:@"image"];
             
             // Set the access control list to current user for security purposes
-            userPhoto.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
+           // userPhoto.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
             
             PFUser *user = [PFUser currentUser];
             [userPhoto setObject:user forKey:@"user"];
