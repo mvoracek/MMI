@@ -30,7 +30,7 @@
  //   self.tableView.tableHeaderView = self.searchBar;
     
  //   self.searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
-    
+
     self.searchController.searchResultsDataSource = self;
     self.searchController.searchResultsDelegate = self;
     self.searchController.delegate = self;
@@ -138,16 +138,12 @@
     
     if (tableView == self.tableView)
     {
-        //if (tableView == self.searchDisplayController.searchResultsTableView) {
-        
+
         return self.objects.count;
-        
     }
     else
     {
-        
         return self.searchResults.count;
-        
     }
     
 }
